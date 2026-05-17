@@ -13,6 +13,8 @@ import { FinalCTA } from "@/components/site/FinalCTA";
 import { Footer } from "@/components/site/Footer";
 import { Loader } from "@/components/site/Loader";
 import { Cursor } from "@/components/site/Cursor";
+import { AmbientBackground } from "@/components/site/AmbientBackground";
+import { ShowcaseMockups } from "@/components/site/ShowcaseMockups";
 
 export const Route = createFileRoute("/")({
   head: () => ({
