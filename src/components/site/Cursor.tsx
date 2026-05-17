@@ -45,9 +45,8 @@ export function Cursor() {
       window.removeEventListener("mousemove", move);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [enabled]);
 
-  if (!enabled) return null;
 
   return (
     <>
