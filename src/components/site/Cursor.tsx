@@ -10,9 +10,13 @@ export function Cursor() {
     // Only on fine pointer + non-touch
     if (window.matchMedia("(hover: none)").matches) return;
     setEnabled(true);
+  }, []);
 
-    const dot = dotRef.current!;
-    const ring = ringRef.current!;
+  useEffect(() => {
+    if (!enabled) return;
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    if (!dot || !ring) return;
     let mx = window.innerWidth / 2;
     let my = window.innerHeight / 2;
     let rx = mx, ry = my;
