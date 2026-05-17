@@ -1,31 +1,83 @@
-import { motion } from "motion/react";
+import { useEffect, useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { Counter } from "./Counter";
 
 const metrics = [
-  { value: "100+", label: "Businesses scaled" },
-  { value: "10M+", label: "Impressions" },
-  { value: "5,000+", label: "Qualified leads" },
-  { value: "4.8x", label: "Avg ROAS" },
+  { v: 100, suffix: "+", label: "Businesses scaled" },
+  { v: 10, suffix: "M+", label: "Impressions" },
+  { v: 5000, suffix: "+", label: "Qualified leads" },
+  { v: 4.8, suffix: "x", label: "Avg ROAS", decimals: 1 },
 ];
 
 const badges = ["Meta Ads", "Google Ads", "WhatsApp Automation", "AI Systems", "CRM Solutions"];
 
 export function Hero() {
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 60, damping: 18 });
+  const sy = useSpring(my, { stiffness: 60, damping: 18 });
+
+  // Parallax depths
+  const o1x = useTransform(sx, [-1, 1], [-30, 30]);
+  const o1y = useTransform(sy, [-1, 1], [-20, 20]);
+  const o2x = useTransform(sx, [-1, 1], [22, -22]);
+  const o2y = useTransform(sy, [-1, 1], [16, -16]);
+  const cardX = useTransform(sx, [-1, 1], [-12, 12]);
+  const cardY = useTransform(sy, [-1, 1], [-8, 8]);
+
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      const el = sectionRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width) * 2 - 1;
+      const y = ((e.clientY - r.top) / r.height) * 2 - 1;
+      mx.set(x);
+      my.set(y);
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [mx, my]);
+
   return (
-    <section id="top" className="relative overflow-hidden pt-32 pb-24 md:pt-40 md:pb-32">
+    <section
+      ref={sectionRef}
+      id="top"
+      className="relative overflow-hidden pt-32 pb-24 md:pt-40 md:pb-32"
+    >
       {/* Background layers */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-grid opacity-60" />
-        <div
-          className="absolute inset-0"
-          style={{ background: "var(--gradient-hero)" }}
+        <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} />
+
+        {/* Conic aura */}
+        <motion.div
+          style={{ x: o1x, y: o1y }}
+          className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 h-[640px] w-[640px] rounded-full conic-glow opacity-50"
         />
-        {/* glowing orbs */}
-        <div className="absolute -top-32 left-1/4 h-[420px] w-[420px] rounded-full blur-3xl opacity-50"
-             style={{ background: "radial-gradient(circle, oklch(0.78 0.13 230 / 0.55), transparent 70%)" }} />
-        <div className="absolute top-20 right-10 h-[360px] w-[360px] rounded-full blur-3xl opacity-40"
-             style={{ background: "radial-gradient(circle, oklch(0.65 0.2 290 / 0.6), transparent 70%)" }} />
-        <div className="absolute bottom-0 left-1/3 h-[300px] w-[600px] rounded-full blur-3xl opacity-30"
-             style={{ background: "radial-gradient(circle, oklch(0.7 0.13 185 / 0.5), transparent 70%)" }} />
+        <motion.div
+          style={{ x: o1x, y: o1y }}
+          className="absolute -top-32 left-1/4 h-[420px] w-[420px] rounded-full blur-3xl opacity-50"
+        >
+          <div className="h-full w-full rounded-full"
+               style={{ background: "radial-gradient(circle, oklch(0.78 0.13 230 / 0.55), transparent 70%)" }} />
+        </motion.div>
+        <motion.div
+          style={{ x: o2x, y: o2y }}
+          className="absolute top-20 right-10 h-[360px] w-[360px] rounded-full blur-3xl opacity-40"
+        >
+          <div className="h-full w-full rounded-full"
+               style={{ background: "radial-gradient(circle, oklch(0.65 0.2 290 / 0.6), transparent 70%)" }} />
+        </motion.div>
+        <motion.div
+          style={{ x: o2x, y: o2y }}
+          className="absolute bottom-0 left-1/3 h-[300px] w-[600px] rounded-full blur-3xl opacity-30"
+        >
+          <div className="h-full w-full rounded-full"
+               style={{ background: "radial-gradient(circle, oklch(0.7 0.13 185 / 0.5), transparent 70%)" }} />
+        </motion.div>
       </div>
 
       <div className="mx-auto max-w-7xl px-6">
@@ -44,22 +96,17 @@ export function Hero() {
           <span className="text-foreground/60">→</span>
         </motion.div>
 
-        {/* Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="mt-6 text-center font-display text-5xl sm:text-6xl md:text-7xl lg:text-[88px] font-semibold tracking-[-0.04em] leading-[0.95]"
-        >
-          <span className="text-gradient">Growth Infrastructure</span>
+        {/* Headline — staggered words */}
+        <h1 className="mt-7 text-center font-display text-5xl sm:text-6xl md:text-7xl lg:text-[92px] font-semibold tracking-[-0.045em] leading-[0.94]">
+          <AnimatedLine delay={0.05} className="text-gradient">Growth Infrastructure</AnimatedLine>
           <br />
-          <span className="text-foreground/95">For Modern Businesses</span>
-        </motion.h1>
+          <AnimatedLine delay={0.25} className="text-foreground/95">For Modern Businesses</AnimatedLine>
+        </h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
           className="mx-auto mt-7 max-w-2xl text-center text-base md:text-lg text-muted-foreground leading-relaxed"
         >
           We help brands, businesses, startups and creators scale using performance marketing,
@@ -70,12 +117,13 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
           className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3"
         >
           <a
             href="#contact"
-            className="group relative inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-background transition-transform hover:scale-[1.03]"
+            data-cursor="hover"
+            className="btn-shine group relative inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-background transition-transform hover:scale-[1.03]"
             style={{ background: "var(--gradient-primary)", boxShadow: "var(--shadow-glow)" }}
           >
             Book Strategy Call
@@ -85,9 +133,15 @@ export function Hero() {
           </a>
           <a
             href="#cases"
-            className="inline-flex items-center gap-2 rounded-xl glass px-6 py-3.5 text-sm font-medium text-foreground hover:bg-white/10 transition-colors"
+            data-cursor="hover"
+            className="group inline-flex items-center gap-2 rounded-xl glass px-6 py-3.5 text-sm font-medium text-foreground hover:bg-white/10 transition-colors"
           >
+            <span className="h-1.5 w-1.5 rounded-full bg-teal" />
             View Case Studies
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                 className="transition-transform group-hover:translate-x-0.5">
+              <path d="M5 12h14M13 5l7 7-7 7" />
+            </svg>
           </a>
         </motion.div>
 
@@ -95,7 +149,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.6 }}
+          transition={{ duration: 1, delay: 0.8 }}
           className="relative mt-14 overflow-hidden"
           style={{ maskImage: "linear-gradient(90deg, transparent, black 12%, black 88%, transparent)" }}
         >
@@ -114,9 +168,10 @@ export function Hero() {
 
         {/* Dashboard mockup */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={{ duration: 1, delay: 0.7 }}
+          style={{ x: cardX, y: cardY }}
           className="relative mt-16 mx-auto max-w-5xl"
         >
           <DashboardMock />
@@ -132,16 +187,19 @@ export function Hero() {
             return (
               <motion.div
                 key={m.label}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.9 + i * 0.1 }}
+                initial={{ opacity: 0, scale: 0.9, y: 8 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1 + i * 0.1 }}
                 className={`absolute ${positions[i]} animate-float`}
                 style={{ animationDelay: `${i * 0.7}s` }}
               >
-                <div className="glass-strong rounded-2xl px-4 py-3 ring-glow min-w-[160px]">
-                  <div className="text-xl font-display font-semibold text-gradient-electric">
-                    {m.value}
-                  </div>
+                <div className="glass-strong rounded-2xl px-4 py-3 ring-glow min-w-[170px]">
+                  <Counter
+                    to={m.v}
+                    suffix={m.suffix}
+                    decimals={m.decimals ?? 0}
+                    className="text-xl font-display font-semibold text-gradient-electric"
+                  />
                   <div className="text-[11px] text-muted-foreground mt-0.5">{m.label}</div>
                 </div>
               </motion.div>
@@ -149,17 +207,44 @@ export function Hero() {
           })}
         </motion.div>
 
-        {/* Mobile metrics */}
+        {/* Mobile metrics with counters */}
         <div className="md:hidden mt-8 grid grid-cols-2 gap-3">
           {metrics.map((m) => (
             <div key={m.label} className="glass rounded-xl px-4 py-3">
-              <div className="text-xl font-display font-semibold text-gradient-electric">{m.value}</div>
+              <Counter
+                to={m.v}
+                suffix={m.suffix}
+                decimals={m.decimals ?? 0}
+                className="text-xl font-display font-semibold text-gradient-electric"
+              />
               <div className="text-[11px] text-muted-foreground mt-0.5">{m.label}</div>
             </div>
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function AnimatedLine({
+  children, delay = 0, className = "",
+}: { children: string; delay?: number; className?: string }) {
+  const words = children.split(" ");
+  return (
+    <span className={`inline-block ${className}`}>
+      {words.map((w, i) => (
+        <span key={i} className="inline-block overflow-hidden align-top">
+          <motion.span
+            initial={{ y: "110%" }}
+            animate={{ y: "0%" }}
+            transition={{ duration: 0.9, delay: delay + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-block"
+          >
+            {w}{i < words.length - 1 ? "\u00A0" : ""}
+          </motion.span>
+        </span>
+      ))}
+    </span>
   );
 }
 
@@ -249,23 +334,32 @@ function ChartLine() {
           <stop offset="1" stopColor="oklch(0.78 0.13 230)" stopOpacity="0" />
         </linearGradient>
       </defs>
-      <path
-        d="M0,80 C40,70 60,60 90,55 C130,48 160,70 200,55 C240,40 270,25 310,30 C340,33 370,20 400,15 L400,110 L0,110 Z"
-        fill="url(#garea)"
-      />
-      <path
+      <motion.path
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: 1, opacity: 1 }}
+        transition={{ duration: 1.6, delay: 1.1, ease: "easeOut" }}
         d="M0,80 C40,70 60,60 90,55 C130,48 160,70 200,55 C240,40 270,25 310,30 C340,33 370,20 400,15"
         stroke="url(#gline)"
         strokeWidth="2"
         fill="none"
       />
+      <motion.path
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 1.8 }}
+        d="M0,80 C40,70 60,60 90,55 C130,48 160,70 200,55 C240,40 270,25 310,30 C340,33 370,20 400,15 L400,110 L0,110 Z"
+        fill="url(#garea)"
+      />
       {[
-        [90, 55],
-        [200, 55],
-        [310, 30],
-        [400, 15],
+        [90, 55], [200, 55], [310, 30], [400, 15],
       ].map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r="3" fill="oklch(0.98 0 0)" />
+        <motion.circle
+          key={i}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 1.6 + i * 0.1 }}
+          cx={x} cy={y} r="3" fill="oklch(0.98 0 0)"
+        />
       ))}
     </svg>
   );
