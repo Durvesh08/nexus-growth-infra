@@ -1,26 +1,54 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Nav } from "@/components/site/Nav";
+import { Hero } from "@/components/site/Hero";
+import { Services } from "@/components/site/Services";
+import { Industries } from "@/components/site/Industries";
+import { SystemFlow } from "@/components/site/SystemFlow";
+import { CaseStudies } from "@/components/site/CaseStudies";
+import { AIDashboard } from "@/components/site/AIDashboard";
+import { Testimonials } from "@/components/site/Testimonials";
+import { WhyUs } from "@/components/site/WhyUs";
+import { FinalCTA } from "@/components/site/FinalCTA";
+import { Footer } from "@/components/site/Footer";
 
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Adsrahu — Growth Infrastructure For Modern Businesses" },
+      {
+        name: "description",
+        content:
+          "Adsrahu builds premium growth infrastructure — performance marketing, AI automation, CRM, WhatsApp funnels and conversion systems for ambitious brands.",
+      },
+      { property: "og:title", content: "Adsrahu — Growth Infrastructure For Modern Businesses" },
+      {
+        property: "og:description",
+        content:
+          "Performance marketing, AI systems, CRM and WhatsApp automation — engineered as one operating layer for modern brands.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+function Home() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="dark min-h-screen bg-background text-foreground antialiased overflow-x-hidden">
+      <Nav />
+      <main>
+        <Hero />
+        <Services />
+        <Industries />
+        <SystemFlow />
+        <CaseStudies />
+        <AIDashboard />
+        <Testimonials />
+        <WhyUs />
+        <FinalCTA />
+      </main>
+      <Footer />
     </div>
   );
-}
-
-function Index() {
-  return <PlaceholderIndex />;
 }
