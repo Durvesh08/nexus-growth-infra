@@ -225,4 +225,30 @@ html, body { background: var(--background); color: var(--foreground); }
     pointer-events: none;
     mix-blend-mode: overlay;
   }
+  .conic-glow {
+    background: conic-gradient(from 180deg at 50% 50%,
+      oklch(0.78 0.13 230 / 0) 0deg,
+      oklch(0.78 0.13 230 / 0.35) 90deg,
+      oklch(0.65 0.2 290 / 0.35) 180deg,
+      oklch(0.7 0.13 185 / 0.35) 270deg,
+      oklch(0.78 0.13 230 / 0) 360deg);
+    filter: blur(40px);
+  }
+  .btn-shine {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-shine::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(110deg, transparent 30%, oklch(1 0 0 / 0.35) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.7s ease;
+  }
+  .btn-shine:hover::after { transform: translateX(120%); }
+
+  @media (hover: hover) and (pointer: fine) {
+    .cursor-stealth, .cursor-stealth * { cursor: none; }
+  }
 }
