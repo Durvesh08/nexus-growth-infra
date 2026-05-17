@@ -10,9 +10,13 @@ export function Cursor() {
     // Only on fine pointer + non-touch
     if (window.matchMedia("(hover: none)").matches) return;
     setEnabled(true);
+  }, []);
 
-    const dot = dotRef.current!;
-    const ring = ringRef.current!;
+  useEffect(() => {
+    if (!enabled) return;
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    if (!dot || !ring) return;
     let mx = window.innerWidth / 2;
     let my = window.innerHeight / 2;
     let rx = mx, ry = my;
@@ -41,12 +45,11 @@ export function Cursor() {
       window.removeEventListener("mousemove", move);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [enabled]);
 
-  if (!enabled) return null;
 
   return (
-    <>
+    <div style={{ opacity: enabled ? 1 : 0 }} aria-hidden>
       <div
         ref={dotRef}
         className="pointer-events-none fixed left-0 top-0 z-[90] h-1.5 w-1.5 rounded-full bg-electric mix-blend-screen"
@@ -60,6 +63,6 @@ export function Cursor() {
             : "h-8 w-8 border-white/20"
         }`}
       />
-    </>
+    </div>
   );
 }
