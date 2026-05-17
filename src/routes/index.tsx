@@ -40,7 +40,8 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   return (
-    <div className="dark cursor-stealth min-h-screen bg-background text-foreground antialiased overflow-x-hidden">
+    <div className="dark cursor-stealth min-h-screen bg-background text-foreground antialiased overflow-x-hidden relative">
+      <AmbientBackground />
       <Loader />
       <Cursor />
       <Nav />
@@ -48,6 +49,7 @@ function Home() {
         <Hero />
         <LogoTicker />
         <Services />
+        <ShowcaseMockups />
         <Industries />
         <SystemFlow />
         <CaseStudies />
