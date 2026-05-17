@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
+import { LogoTicker } from "@/components/site/LogoTicker";
 import { Services } from "@/components/site/Services";
 import { Industries } from "@/components/site/Industries";
 import { SystemFlow } from "@/components/site/SystemFlow";
@@ -10,6 +11,8 @@ import { Testimonials } from "@/components/site/Testimonials";
 import { WhyUs } from "@/components/site/WhyUs";
 import { FinalCTA } from "@/components/site/FinalCTA";
 import { Footer } from "@/components/site/Footer";
+import { Loader } from "@/components/site/Loader";
+import { Cursor } from "@/components/site/Cursor";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -35,10 +38,13 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   return (
-    <div className="dark min-h-screen bg-background text-foreground antialiased overflow-x-hidden">
+    <div className="dark cursor-stealth min-h-screen bg-background text-foreground antialiased overflow-x-hidden">
+      <Loader />
+      <Cursor />
       <Nav />
       <main>
         <Hero />
+        <LogoTicker />
         <Services />
         <Industries />
         <SystemFlow />
