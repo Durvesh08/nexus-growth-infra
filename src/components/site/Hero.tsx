@@ -97,20 +97,22 @@ export function Hero() {
         </motion.div>
 
         {/* Headline — staggered words */}
-        <h1 className="mt-7 text-center font-display text-5xl sm:text-6xl md:text-7xl lg:text-[92px] font-semibold tracking-[-0.045em] leading-[0.94]">
-          <AnimatedLine delay={0.05} className="text-gradient">Growth Infrastructure</AnimatedLine>
+        <h1 className="mt-7 text-center font-display text-[40px] sm:text-5xl md:text-6xl lg:text-[78px] font-semibold tracking-[-0.045em] leading-[1.02]">
+          <AnimatedLine delay={0.05} className="text-gradient">Performance Marketing</AnimatedLine>
           <br />
-          <AnimatedLine delay={0.25} className="text-foreground/95">For Modern Businesses</AnimatedLine>
+          <AnimatedLine delay={0.2} className="text-foreground/95">&amp; Lead Generation</AnimatedLine>
+          <br />
+          <AnimatedLine delay={0.35} className="text-foreground/70">For Real Estate.</AnimatedLine>
         </h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="mx-auto mt-7 max-w-2xl text-center text-base md:text-lg text-muted-foreground leading-relaxed"
+          className="mx-auto mt-7 max-w-2xl text-center text-[15px] md:text-lg text-muted-foreground leading-relaxed"
         >
-          We help brands, businesses, startups and creators scale using performance marketing,
-          AI automation, conversion systems and premium growth strategies.
+          We help builders, realtors and businesses generate qualified leads using
+          Facebook Ads, Google Ads, CRM automation and WhatsApp funnels.
         </motion.p>
 
         {/* CTAs */}
@@ -121,27 +123,22 @@ export function Hero() {
           className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3"
         >
           <a
-            href="#contact"
-            data-cursor="hover"
+            href="/book-a-call"
             className="btn-shine group relative inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-background transition-transform hover:scale-[1.03]"
             style={{ background: "var(--gradient-primary)", boxShadow: "var(--shadow-glow)" }}
           >
-            Book Strategy Call
+            Book Free Strategy Call
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M5 12h14M13 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
           <a
-            href="#cases"
-            data-cursor="hover"
+            href="https://wa.me/919999999999"
+            target="_blank" rel="noreferrer"
             className="group inline-flex items-center gap-2 rounded-xl glass px-6 py-3.5 text-sm font-medium text-foreground hover:bg-white/10 transition-colors"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-teal" />
-            View Case Studies
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-                 className="transition-transform group-hover:translate-x-0.5">
-              <path d="M5 12h14M13 5l7 7-7 7" />
-            </svg>
+            Chat on WhatsApp
           </a>
         </motion.div>
 
