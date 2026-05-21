@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Instagram, Linkedin, Twitter, Youtube, MessageCircle } from "lucide-react";
+import { Instagram, Linkedin, Twitter, Youtube, Phone, Mail } from "lucide-react";
+import logoUrl from "@/assets/adsrahu-logo.png";
+import { WhatsAppIcon } from "./Nav";
 
 const groups = [
   { title: "Company", links: [
     { l: "About", to: "/about" as const },
     { l: "Team", to: "/team" as const },
-    { l: "Case Studies", to: "/case-studies" as const },
     { l: "Results", to: "/results" as const },
     { l: "Blog", to: "/blog" as const },
   ]},
@@ -26,14 +27,14 @@ const groups = [
 export function Footer() {
   const [email, setEmail] = useState("");
   return (
-    <footer className="relative pt-24 pb-10 overflow-hidden">
+    <footer className="relative pt-20 sm:pt-24 pb-10 overflow-hidden">
       <div className="absolute inset-x-0 top-0 -z-10 h-px" style={{ background: "linear-gradient(90deg, transparent, oklch(0.78 0.13 230 / 0.4), transparent)" }} />
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="rounded-3xl glass-strong p-8 md:p-12 ring-glow">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6">
+        <div className="rounded-3xl glass-strong p-6 sm:p-8 md:p-12 ring-glow">
           <div className="grid lg:grid-cols-12 gap-10">
             <div className="lg:col-span-5">
               <Link to="/" className="flex items-center gap-2.5">
-                <div className="h-9 w-9 rounded-lg bg-[var(--gradient-primary)] glow-electric grid place-items-center text-background font-black text-sm">A</div>
+                <img src={logoUrl} alt="Adsrahu" className="h-10 w-10 object-contain" />
                 <span className="font-display text-lg font-semibold tracking-tight">Adsrahu</span>
               </Link>
               <p className="mt-5 text-sm text-muted-foreground max-w-sm leading-relaxed">
@@ -41,9 +42,9 @@ export function Footer() {
                 and AI engineered as one system.
               </p>
 
-              <form onSubmit={(e) => { e.preventDefault(); setEmail(""); }} className="mt-7 max-w-md">
+              <form onSubmit={(e) => { e.preventDefault(); setEmail(""); }} className="mt-6 max-w-md">
                 <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-2">Growth dispatch · monthly</div>
-                <div className="flex items-center gap-2 rounded-xl glass p-1.5 focus-within:glow-electric transition-shadow">
+                <div className="flex items-center gap-2 rounded-xl glass p-1.5">
                   <input
                     type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
                     placeholder="founder@yourbrand.com"
@@ -55,10 +56,19 @@ export function Footer() {
                 </div>
               </form>
 
-              <a href="https://wa.me/919999999999" target="_blank" rel="noreferrer"
-                className="mt-5 inline-flex items-center gap-2 rounded-xl glass px-4 py-2.5 text-xs font-medium hover:bg-white/10 transition-colors">
-                <MessageCircle size={13} className="text-teal" /> Chat with us on WhatsApp
-              </a>
+              <div className="mt-6 grid sm:grid-cols-2 gap-2">
+                <a href="tel:+917485022937" className="inline-flex items-center gap-2 rounded-xl glass px-4 py-2.5 text-xs font-medium hover:bg-white/10 transition-colors">
+                  <Phone size={13} className="text-electric" /> +91 74850 22937
+                </a>
+                <a href="mailto:contact@adsrahu.com" className="inline-flex items-center gap-2 rounded-xl glass px-4 py-2.5 text-xs font-medium hover:bg-white/10 transition-colors">
+                  <Mail size={13} className="text-electric" /> contact@adsrahu.com
+                </a>
+                <a href="https://wa.me/917485022937" target="_blank" rel="noreferrer"
+                  className="sm:col-span-2 inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold text-background"
+                  style={{ background: "var(--gradient-primary)" }}>
+                  <WhatsAppIcon className="h-3.5 w-3.5" /> Chat with us on WhatsApp
+                </a>
+              </div>
             </div>
 
             <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-6">
@@ -80,7 +90,7 @@ export function Footer() {
           </div>
 
           <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-[11px] text-muted-foreground">
+            <div className="text-[11px] text-muted-foreground text-center sm:text-left">
               © {new Date().getFullYear()} Adsrahu. All rights reserved.
             </div>
             <div className="flex items-center gap-1.5">
@@ -93,7 +103,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 text-center">
+        <div className="mt-10 text-center hidden sm:block">
           <div className="font-display text-[14vw] leading-none font-semibold tracking-[-0.06em] text-gradient opacity-25 select-none">
             ADSRAHU
           </div>
