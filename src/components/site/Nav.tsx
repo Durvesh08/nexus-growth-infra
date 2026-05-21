@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
 import { Link } from "@tanstack/react-router";
+import { Phone } from "lucide-react";
+import logoUrl from "@/assets/adsrahu-logo.png";
 
 const links = [
   { label: "Services", to: "/services" as const },
   { label: "Industries", to: "/industries" as const },
   { label: "Results", to: "/results" as const },
-  { label: "Case Studies", to: "/case-studies" as const },
   { label: "About", to: "/about" as const },
   { label: "Blog", to: "/blog" as const },
   { label: "Contact", to: "/contact" as const },
@@ -19,23 +19,21 @@ export function Nav() {
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
   return (
-    <motion.header
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className="fixed top-0 inset-x-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4"
-    >
-      <div className={`mx-auto max-w-7xl rounded-2xl transition-all duration-500 ${scrolled ? "glass-strong ring-glow" : "border border-transparent"}`}>
-        <div className="flex items-center justify-between px-4 sm:px-5 py-2.5 sm:py-3">
-          <Link to="/" className="flex items-center gap-2.5">
-            <div className="relative h-8 w-8 rounded-lg bg-[var(--gradient-primary)] glow-electric">
-              <span className="absolute inset-0 flex items-center justify-center text-[13px] font-black text-background">A</span>
-            </div>
+    <header className="fixed top-0 inset-x-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
+      <div className={`mx-auto max-w-7xl rounded-2xl transition-colors duration-300 ${scrolled || open ? "glass-strong ring-glow" : "border border-transparent"}`}>
+        <div className="flex items-center justify-between px-3 sm:px-5 py-2.5 sm:py-3">
+          <Link to="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
+            <img src={logoUrl} alt="Adsrahu" className="h-9 w-9 object-contain" />
             <span className="font-display text-base font-semibold tracking-tight">Adsrahu</span>
           </Link>
 
@@ -55,16 +53,14 @@ export function Nav() {
           <div className="flex items-center gap-2">
             <Link
               to="/book-a-call"
-              className="hidden sm:inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-background btn-shine transition-transform hover:scale-[1.03]"
+              className="hidden sm:inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-background btn-shine"
               style={{ background: "var(--gradient-primary)" }}
             >
+              <Phone size={13} />
               Book Call
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M5 12h14M13 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
             </Link>
-            <button onClick={() => setOpen(!open)} className="lg:hidden h-9 w-9 grid place-items-center rounded-lg glass" aria-label="Menu">
-              <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none">
+            <button onClick={() => setOpen(!open)} className="lg:hidden h-10 w-10 grid place-items-center rounded-lg glass" aria-label="Menu">
+              <svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none">
                 {open ? <path d="M6 6l12 12M6 18L18 6" strokeLinecap="round" /> : <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />}
               </svg>
             </button>
@@ -72,21 +68,39 @@ export function Nav() {
         </div>
 
         {open && (
-          <div className="lg:hidden border-t border-border px-3 py-3 grid gap-1">
+          <div className="lg:hidden rounded-b-2xl border-t border-white/10 px-3 py-3 grid gap-1"
+               style={{ background: "linear-gradient(180deg, oklch(0.13 0.04 270 / 0.96), oklch(0.13 0.04 270 / 0.98))" }}>
             {links.map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-white/5"
+                className="rounded-lg px-4 py-3 text-[15px] text-foreground/90 hover:text-foreground hover:bg-white/5 transition-colors"
               >
                 {l.label}
               </Link>
             ))}
-            <Link to="/team" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-white/5">Team</Link>
+            <Link to="/team" onClick={() => setOpen(false)} className="rounded-lg px-4 py-3 text-[15px] text-foreground/90 hover:bg-white/5">Team</Link>
+            <div className="mt-2 grid grid-cols-2 gap-2 px-1 pb-1">
+              <a href="tel:+917485022937" className="inline-flex items-center justify-center gap-2 rounded-xl glass px-3 py-3 text-[13px] font-medium">
+                <Phone size={14} className="text-electric" /> Call
+              </a>
+              <a href="https://wa.me/917485022937" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl px-3 py-3 text-[13px] font-semibold text-background"
+                 style={{ background: "var(--gradient-primary)" }}>
+                <WhatsAppIcon className="h-3.5 w-3.5" /> WhatsApp
+              </a>
+            </div>
           </div>
         )}
       </div>
-    </motion.header>
+    </header>
+  );
+}
+
+export function WhatsAppIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26L3.36 19.16l3.294-.967zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
   );
 }
