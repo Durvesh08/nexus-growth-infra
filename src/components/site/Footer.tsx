@@ -102,11 +102,23 @@ export function Footer() {
               © {new Date().getFullYear()} Adsrahu. All rights reserved.
             </div>
             <div className="flex items-center gap-1.5">
-              {[Twitter, Linkedin, Instagram, Youtube].map((Icon, i) => (
-                <a key={i} href="#" className="h-9 w-9 grid place-items-center rounded-lg glass hover:bg-white/10 transition-colors">
-                  <Icon size={14} className="text-foreground/80" />
-                </a>
-              ))}
+              {SOCIALS.map((s) => {
+                const Icon = SOCIAL_ICONS[s.key] ?? Linkedin;
+                const isWa = s.key === "whatsapp";
+                return (
+                  <a
+                    key={s.key}
+                    href={s.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={s.name}
+                    title={s.name}
+                    className="h-9 w-9 grid place-items-center rounded-lg glass hover:bg-white/10 hover:text-electric transition-colors"
+                  >
+                    {isWa ? <WhatsAppIcon className="h-3.5 w-3.5" /> : <Icon size={14} className="text-foreground/80" />}
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>
