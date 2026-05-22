@@ -1,6 +1,8 @@
 import { motion } from "motion/react";
 import { Link } from "@tanstack/react-router";
-import { Building2, MapPin, Phone, TrendingUp } from "lucide-react";
+import { Building2, MapPin, TrendingUp } from "lucide-react";
+import { WhatsAppIcon } from "./Nav";
+import { CONTACT } from "@/lib/contact";
 
 const services = [
   "Facebook & Instagram Ads",
