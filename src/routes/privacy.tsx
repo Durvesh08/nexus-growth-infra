@@ -14,7 +14,7 @@ export const Route = createFileRoute("/privacy")({
         { h: "3. Cookies & analytics", p: <p>We use privacy-respecting analytics to understand how the site is used and improve content quality. You may disable cookies in your browser settings.</p> },
         { h: "4. Third-party services", p: <p>We rely on trusted providers (e.g. CRM, email, scheduling) under strict data agreements. Only the minimum data required is shared.</p> },
         { h: "5. Data retention", p: <p>We retain inquiry and client data only as long as needed to deliver services and meet legal obligations.</p> },
-        { h: "6. Your rights", p: <p>You may request access, correction or deletion of your personal data at any time by emailing hello@adsrahu.com.</p> },
+        { h: "6. Your rights", p: <p>You may request access, correction or deletion of your personal data at any time by emailing contact@adsrahu.com.</p> },
         { h: "7. Updates", p: <p>This policy may be updated periodically. Material changes will be reflected on this page with a new “last updated” date.</p> },
       ]}
     />

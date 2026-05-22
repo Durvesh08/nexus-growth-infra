@@ -14,7 +14,7 @@ export const Route = createFileRoute("/refund")({
         { h: "3. Project-based work", p: <p>For scoped projects (landing pages, CRM setup, funnel builds), refunds are available on the unworked portion if cancellation occurs before delivery milestones.</p> },
         { h: "4. Monthly retainers", p: <p>Retainer fees cover work delivered in the billing month and are non-refundable once that month's services have commenced.</p> },
         { h: "5. Ad spend", p: <p>Ad budget paid to platforms (Meta, Google, etc.) is governed by those platforms' terms and is not refundable by Adsrahu.</p> },
-        { h: "6. How to request a refund", p: <p>Email hello@adsrahu.com within 7 days of the billing event with your invoice details and reason. We aim to respond within 3 business days.</p> },
+        { h: "6. How to request a refund", p: <p>Email contact@adsrahu.com within 7 days of the billing event with your invoice details and reason. We aim to respond within 3 business days.</p> },
         { h: "7. Updates", p: <p>This policy may be updated periodically. The latest version always applies to active engagements.</p> },
       ]}
     />

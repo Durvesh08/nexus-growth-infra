@@ -3,6 +3,14 @@ import { Link } from "@tanstack/react-router";
 import { Instagram, Linkedin, Twitter, Youtube, Phone, Mail } from "lucide-react";
 import logoUrl from "@/assets/adsrahu-logo.png";
 import { WhatsAppIcon } from "./Nav";
+import { CONTACT, SOCIALS } from "@/lib/contact";
+
+const SOCIAL_ICONS: Record<string, typeof Linkedin> = {
+  linkedin: Linkedin,
+  instagram: Instagram,
+  twitter: Twitter,
+  youtube: Youtube,
+};
 
 const groups = [
   { title: "Company", links: [
@@ -47,7 +55,7 @@ export function Footer() {
                 <div className="flex items-center gap-2 rounded-xl glass p-1.5">
                   <input
                     type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
-                    placeholder="founder@yourbrand.com"
+                    placeholder="you@yourbrand.com"
                     className="flex-1 bg-transparent px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground/70"
                   />
                   <button type="submit" className="rounded-lg px-4 py-2.5 text-xs font-semibold text-background" style={{ background: "var(--gradient-primary)" }}>
@@ -57,15 +65,15 @@ export function Footer() {
               </form>
 
               <div className="mt-6 grid sm:grid-cols-2 gap-2">
-                <a href="tel:+917485022937" className="inline-flex items-center gap-2 rounded-xl glass px-4 py-2.5 text-xs font-medium hover:bg-white/10 transition-colors">
-                  <Phone size={13} className="text-electric" /> +91 74850 22937
+                <a href={`tel:${CONTACT.phoneRaw}`} className="inline-flex items-center gap-2 rounded-xl glass px-4 py-2.5 text-xs font-medium hover:bg-white/10 transition-colors">
+                  <Phone size={13} className="text-electric" /> {CONTACT.phone}
                 </a>
-                <a href="mailto:contact@adsrahu.com" className="inline-flex items-center gap-2 rounded-xl glass px-4 py-2.5 text-xs font-medium hover:bg-white/10 transition-colors">
-                  <Mail size={13} className="text-electric" /> contact@adsrahu.com
+                <a href={`mailto:${CONTACT.email}`} className="inline-flex items-center gap-2 rounded-xl glass px-4 py-2.5 text-xs font-medium hover:bg-white/10 transition-colors">
+                  <Mail size={13} className="text-electric" /> {CONTACT.email}
                 </a>
-                <a href="https://wa.me/917485022937" target="_blank" rel="noreferrer"
-                  className="sm:col-span-2 inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold text-background"
-                  style={{ background: "var(--gradient-primary)" }}>
+                <a href={CONTACT.whatsappUrl} target="_blank" rel="noreferrer"
+                  className="sm:col-span-2 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold text-background btn-shine"
+                  style={{ background: "var(--gradient-primary)", boxShadow: "var(--shadow-glow)" }}>
                   <WhatsAppIcon className="h-3.5 w-3.5" /> Chat with us on WhatsApp
                 </a>
               </div>
@@ -94,11 +102,23 @@ export function Footer() {
               © {new Date().getFullYear()} Adsrahu. All rights reserved.
             </div>
             <div className="flex items-center gap-1.5">
-              {[Twitter, Linkedin, Instagram, Youtube].map((Icon, i) => (
-                <a key={i} href="#" className="h-9 w-9 grid place-items-center rounded-lg glass hover:bg-white/10 transition-colors">
-                  <Icon size={14} className="text-foreground/80" />
-                </a>
-              ))}
+              {SOCIALS.map((s) => {
+                const Icon = SOCIAL_ICONS[s.key] ?? Linkedin;
+                const isWa = s.key === "whatsapp";
+                return (
+                  <a
+                    key={s.key}
+                    href={s.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={s.name}
+                    title={s.name}
+                    className="h-9 w-9 grid place-items-center rounded-lg glass hover:bg-white/10 hover:text-electric transition-colors"
+                  >
+                    {isWa ? <WhatsAppIcon className="h-3.5 w-3.5" /> : <Icon size={14} className="text-foreground/80" />}
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>

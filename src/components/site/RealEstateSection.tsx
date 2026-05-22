@@ -1,6 +1,8 @@
 import { motion } from "motion/react";
 import { Link } from "@tanstack/react-router";
-import { Building2, MapPin, Phone, TrendingUp } from "lucide-react";
+import { Building2, MapPin, TrendingUp } from "lucide-react";
+import { WhatsAppIcon } from "./Nav";
+import { CONTACT } from "@/lib/contact";
 
 const services = [
   "Facebook & Instagram Ads",
@@ -133,11 +135,11 @@ export function RealEstateSection() {
             Book Free Strategy Call
           </Link>
           <a
-            href="https://wa.me/919999999999"
+            href={CONTACT.whatsappUrl}
             target="_blank" rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-xl glass px-6 py-3.5 text-sm font-medium hover:bg-white/10 transition-colors"
           >
-            <Phone size={14} className="text-teal" /> Chat on WhatsApp
+            <WhatsAppIcon className="h-4 w-4 text-teal" /> Chat on WhatsApp
           </a>
         </motion.div>
       </div>
