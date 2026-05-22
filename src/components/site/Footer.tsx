@@ -3,6 +3,14 @@ import { Link } from "@tanstack/react-router";
 import { Instagram, Linkedin, Twitter, Youtube, Phone, Mail } from "lucide-react";
 import logoUrl from "@/assets/adsrahu-logo.png";
 import { WhatsAppIcon } from "./Nav";
+import { CONTACT, SOCIALS } from "@/lib/contact";
+
+const SOCIAL_ICONS: Record<string, typeof Linkedin> = {
+  linkedin: Linkedin,
+  instagram: Instagram,
+  twitter: Twitter,
+  youtube: Youtube,
+};
 
 const groups = [
   { title: "Company", links: [
